@@ -1,14 +1,11 @@
-<body>
-	<div class="container">
-		<header>
-			<h1>those numbers in queue</h1>
-		</header>
-
-		<button class="generate">generate number</button>
-		{{ #if greaterThan generatedNumber 999}}
-			{{ generatedNumber }}
-		{{ /if }}
-
+<!--
+	Code Citation
+	Title: Starter Template
+	Author(s): Alvin Wang, Alan Chang, Alex Mark, Kevin Louie
+	Date Accessed: 9 May 2016
+	Availability: http://materializecss.com/templates/starter-template/preview.html
+-->
+<!-- 
 		{{ #if equals flag 1 }}
 			{{ #each numbers }}
 				{{> number }}
@@ -17,7 +14,7 @@
 				<button class="submit">serve ticket</button>
 				<button class="clear">clear collection</button>
 			</form>
-			<!-- insert a toast here -->
+			insert a toast here
 		{{ else }}
 			{{ #each numbers }}
 				{{> number }}
@@ -26,13 +23,126 @@
 				<button class="void">serve ticket</button>
 				<button class="clear">clear collection</button>
 			</form>
-			<!-- insert a toast here -->
-		{{ /if }}
+			<- insert a toast here
+		{{ /if }} -->
+
+<!-- 								{{ #each lastNumber}}
+	<p id="lastNumb">{{ lastNum }}</p>
+{{ /each }} -->
+								
+<body>
+	<nav class="blue darken-3" role="navigation">
+		<div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">UPLB Registration Queue Management System</a></div>
+	</nav>
+
+	<div class="section no-pad-bot" id="index-banner">
+		<div class="container">
+			<div class="row">
+				<div class="col s12">
+					<span class="flow-text">
+						<div class="card-panel" id="cardConstant3">
+							<span class="extremefont">
+								<span class="grey-text text-darken-4">Current number being served: </span>
+							</span>
+							{{ #if greaterThan ticketToBeServed 0 }}
+								<p class="changeFont this-p"> {{ ticketToBeServed }}  </p>
+							{{ /if }}
+
+							{{ #if equals flag 1 }}
+								<form class="dequeue">
+									<button class="btn waves-effect waves-light right this-button" type="submit">Serve ticket</button>
+								</form>
+							{{ else }}
+								<form class="void">
+									<button class="btn waves-effect waves-light right this-button" type="submit">Serve ticket</button>
+								</form>
+							{{ /if }}
+						</div>
+					</span>
+				</div>
+				<div class="col s7 push-s5">
+					<div class="center">
+						<span class="flow-text">
+							<div class="card-panel" id="cardConstant1">
+								<span class="extremefont">
+									<span class="grey-text text-darken-4">Tickets being served:</span>
+									<div class="scrollable">
+										{{ #if equals flag 1 }}
+											{{ #each numbers }}
+												{{> number }}
+											{{ /each }}
+										{{ else }}
+											{{ #each numbers }}
+												{{> number }}
+											{{ /each }}
+										{{ /if }}
+									</div>
+								</span>
+							</div>
+						</span>
+					</div>
+				</div>
+				<div class="col s5 pull-s7">
+					<div class="center">
+						<span class="flow-text">
+							<div class="card-panel" id="cardConstant2">
+								<span class="extremefont">
+									<span class="grey-text text-darken-4">Generate number:</span>
+								</span> <br> <br> <br>
+								{{ #if greaterThan generatedNumber 999}}
+									<h1 class="black-text text-darken-4" id="center-this">
+											{{ generatedNumber }}
+									</h1>
+									<p id="center-this2">Wait for your number to be called. Patience is a virtue.</p>
+								{{ /if }}
+								<span class="footer-button">
+									<button class="generate btn waves-effect waves-light btn-large" type="submit" name="action">
+										Generate
+									</button>
+								</span>
+							</div>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+
+	<footer class="page-footer purple">
+		<div class="container">
+			<div class="row">
+				<div class="col l6">
+					<h5 class="white-text">PAD Assignment #2</h5>
+					<p class="light" id="thisID">I really do not know why am I doing this assignment. Maybe because gusto ko lang matuto. Maybe because of peer pressure. We'll never know. #AngGandaNgMaterialize #MaterializeTalagaYungInaralKoHindiMeteor #MaterializeIsLife</p>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				© 2016 Projects and Activities Department - Young Software Engineers' Society
+				<form class="dequeue right">
+					<button class="btn waves-effect waves-light clear" type="submit">clear collection</button>
+				</form>
+				<a class="grey-text text-lighten-4 right" href="http://fb.com/jourish.abasolo">jjdcabasolo&nbsp;&nbsp;&nbsp;&nbsp;</a>
+			</div>
+		</div>
+	</footer>
+
+
+	<!--	Scripts-->
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="js/materialize.js"></script>
+	<script src="js/init.js"></script>
 </body>
 
 <template name="number">
-	<li>
-		<ul>{{ queueNumber }} <button class="remove">Remove</button> </ul>
-	</li>
+	<ul>
+		<p class="changeFont" id="numberToBeDeleted"> {{ queueNumber }} </p> <button class="btn waves-effect waves-light remove" type="submit" id="alignThis"> x </button>
+	</ul>
+</template>
+
+<template name="last">
+	{{ #each lastNumber}}
+		<p id="lastNumb">{{ lastNum }}</p>
+	{{ /each }}
 </template>

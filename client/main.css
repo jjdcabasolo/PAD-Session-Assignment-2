@@ -1,8 +1,64 @@
 /* CSS declarations go here */
-#header{
-	font-size: 100px;
-}
 
-p{
-	font-family: Hermit;
+
+body {
+	display: flex;
+	min-height: 100vh;
+	background-color: #F5F5F5;
+	flex-direction: column;
+}
+.icon-block {
+	padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+.extremefont {
+	font-weight: 400;
+}
+.changeFont {
+	font-weight:800;
+	font-size: 	150%;
+	display: 	inline;
+}
+#cardConstant1 {	
+	height: 550px;
+}
+#cardConstant2 {
+	height: 550px;
+}
+#center-this {
+	/*position: 	absolute;*/
+	bottom:   	100%;
+	font-weight:600;
+	font-size: 	500%;
+}
+#center-this2 {
+	/*position: 	absolute;*/
+	bottom: 	35%;
+	font-size: 	70%;
+}
+#thisID {
+	color: 		white;
+}
+#alignThis {
+	vertical-align: middle;
+	margin-bottom: 15px; 
+}
+.this-button {
+	bottom: 30px;
+	display: inline;
+}
+p .this-p {
+	display: inline;
+}
+.footer-button {
+	position: absolute;
+	right: 		50px;
+	bottom: 	50px;
+}
+.scrollable {
+	height: 	470px;
+	width:		100%;
+	overflow:	auto;
 }

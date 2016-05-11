@@ -2,12 +2,16 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import { Numbers } from '../../imports/api/numbers.js';
+import { LastNumber } from '../../imports/api/lastNumber.js';
 
 import './body.html';
 
 Template.body.onCreated(function bodyOnCreated() {
 	Meteor.subscribe('numbers');										// para ma-publish niya b3h
+	Meteor.subscribe('lastNumber');										// para ma-publish niya b3h
+
 	this.generatedNumber = new ReactiveVar(999); 					// i officially declare that the ticket will have four digits.
+	this.ticketToBeServed = new ReactiveVar(0);
 	this.flag = new ReactiveVar(1);									// just a flag for identifying if first time maglalagay sa array			
 	this.waitingQueue = new ReactiveVar([]);							// utilize array methods for queue implementation
 });																		// problem pa with reactive integer, it will always start with 1000.
@@ -16,8 +20,14 @@ Template.body.helpers({
 	numbers(){
 		return Numbers.find({});										// for collections, maybe? 
 	},
+	lastNumber(){
+		return LastNumber.find({});										// for collections, maybe? 
+	},
 	generatedNumber(){
 		return Template.instance().generatedNumber.get();
+	},
+	ticketToBeServed(){
+		return Template.instance().ticketToBeServed.get();
 	},
 	flag(){
 		return Template.instance().flag.get();
@@ -32,7 +42,7 @@ Template.body.helpers({
 	greaterThan(a, b){
 		if(a > b) return true;
 		return false;
-	}
+	},
 });
 
 Template.body.events({
@@ -44,12 +54,11 @@ Template.body.events({
 		if(tempArray.length >= 0 || instance.flag.get() == 1){
 			var ticketToBeServed = tempArray.shift();
 		 	instance.waitingQueue.set(tempArray);
-			// apply the toast here. mehehe say na wala na na-sere yung ticket successfully
+		 	instance.ticketToBeServed.set(ticketToBeServed);
 			console.log("served! arraySize: " + tempArray.length + " flag: " + instance.flag.get());
 			if(tempArray.length == 0) instance.flag.set(0);
 		}
 		else{
-			// apply the toast here. mehehe say na wala nang pwedeng i-serve
 			console.log("not served! arraySize: " + tempArray.length + " flag: " + instance.flag.get());
 		}
 
@@ -68,22 +77,35 @@ Template.body.events({
 
 
 	'click .generate'(event, instance) {		
-		instance.generatedNumber.set(instance.generatedNumber.get() + 1); // increment the generatedNumber when button is clicked
+		// getting last number saved in collection
+		// var last = document.getElementById('lastNumb').innerText;
+		// console.log(last);
+		// instance.generatedNumber.set( + 1);
+
+		instance.generatedNumber.set(instance.generatedNumber.get() + 1);
 		
+		// console.log(lastNum);
+		// if(instance.generatedNumber.get() === undefined) instance.generatedNumber.set(1000); // begin at the beginning
+
 		var currentNumber = instance.generatedNumber.get();			// get the generated number (reactive integer)
 		let tempArray = instance.waitingQueue.get();
 		tempArray.push(currentNumber);
 		instance.waitingQueue.set(tempArray);
 
+		// updating last number in collection
+
 		instance.flag.set(1);
+
+		// Meteor.call('lastNumber.removeAll'); // clear muna		
+		// Meteor.call('lastNumber.insert', currentNumber);
 	},
 
-	'click .remove'(event, instance) {
+	'click .remove'(event) {
 		// Prevent default browser form submit
 		event.preventDefault();
 
-		// Remove a single ticket
-		Meteor.call('numbers.remove', instance.waitingQueue);
+		console.log(this._id);
+		Meteor.call('numbers.remove', this._id);	
 	},
 
 	'click .clear'(event) {

@@ -22,8 +22,8 @@ Meteor.methods({
 		});
 	},
 
-	'numbers.remove'(queueNumber) {									// removing a single entry
-		Numbers.remove(queueNumber);
+	'numbers.remove'(_id) {											// removing a single entry
+		Numbers.remove({_id});
 	},
 
 	'numbers.removeAll'() { 											// clearing the data on collection
