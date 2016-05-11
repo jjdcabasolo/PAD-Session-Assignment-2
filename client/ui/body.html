@@ -1,0 +1,38 @@
+<body>
+	<div class="container">
+		<header>
+			<h1>those numbers in queue</h1>
+		</header>
+
+		<button class="generate">generate number</button>
+		{{ #if greaterThan generatedNumber 999}}
+			{{ generatedNumber }}
+		{{ /if }}
+
+		{{ #if equals flag 1 }}
+			{{ #each numbers }}
+				{{> number }}
+			{{ /each }}
+			<form class="dequeue">
+				<button class="submit">serve ticket</button>
+				<button class="clear">clear collection</button>
+			</form>
+			<!-- insert a toast here -->
+		{{ else }}
+			{{ #each numbers }}
+				{{> number }}
+			{{ /each }}
+			<form class="void">
+				<button class="void">serve ticket</button>
+				<button class="clear">clear collection</button>
+			</form>
+			<!-- insert a toast here -->
+		{{ /if }}
+	</div>
+</body>
+
+<template name="number">
+	<li>
+		<ul>{{ queueNumber }} <button class="remove">Remove</button> </ul>
+	</li>
+</template>
